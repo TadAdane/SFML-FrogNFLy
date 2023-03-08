@@ -69,6 +69,48 @@ class Student{
     
 };
 
+class Complex{
+    public:
+    Complex(float real_num, float imaginary_num){
+        real_num_ = real_num;
+        imaginary_num_ = imaginary_num;
+    }
+    Complex(float real_num){
+        real_num_ = real_num;
+    }
+
+    Complex(){
+        //
+    }
+    void set_im(float imaginary_num){
+        imaginary_num_ = imaginary_num;
+    }
+    
+    void set_rl(float real_num){
+        real_num_ = real_num;
+    }
+    
+    Complex add(Complex a){
+        Complex c;
+        c.imaginary_num_ = imaginary_num_ + a.imaginary_num_;
+        c.real_num_ = real_num_ + a.real_num_;
+        return c;
+    }
+    void print(){
+        cout << real_num_;
+        if (imaginary_num_ >= 0){
+            cout << "+";
+        }
+        
+        cout << imaginary_num_ << "i";
+    }
+    
+    private:
+    float imaginary_num_;
+    float real_num_;
+};
+
+
 int main()
 {
     Student student1;
@@ -82,6 +124,25 @@ int main()
     Student student3;
     student3.set_student("Begeta", "Lentebo", "56486", {3.5, 5.0, 3.5, 4.0, 2.0});
     student3.print_class();
+    
+    
+    Complex a(1.0, -2.0); // creates 1-2i
+    a.print();
+    cout << "\n";
+    
+    Complex b(3.14); // creates 3.14
+    b.print();
+    
+    b.set_im(-5);
+    cout << "\n";
+    b.print();
+    
+    Complex c = a.add(b);
+    cout << "\n";
+    c.print(); // prints 4.14-7
+
 
     return 0;
 }
+//Loop for main funciton not working
+//When code for q2 is relocated to a new void function, b with set_im not working.

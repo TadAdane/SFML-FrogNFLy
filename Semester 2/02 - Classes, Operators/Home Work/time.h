@@ -7,7 +7,7 @@ using namespace std;
 class Time{
     public:
     
-    Time(float sec = 0.0);
+    Time(float hour = 0.0, float min = 0.0, float sec = 0.0);
     
     void print();
     Time operator-(const Time &other) const;

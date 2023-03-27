@@ -1,48 +1,39 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-class Invoice{
+
+class Item{
     public:
-    Invoice(long unsigned int seller, long unsigned int buyer){
-        buyer_ = buyer;
-        seller_ = seller;
-    }
-    friend std::ostream &operator<<(std::ostream &str, Invoice &rhs){
-        str << "------------------VAT invoice------------------" << endl;
-        str << "===============================================" << endl; 
-        str << "Seller: " << rhs.seller_;
-        str << "                      Buyer: " << rhs.buyer_ << endl;
-        str << "                  c.j.  VAT   il.   net   total" << endl;
-        str << rhs.name_ << " | " << rhs.price_ << " | " << rhs.tax_ << " | " << rhs.amount_ << " | " << rhs.amount_ * rhs.price_ << " | ";
-        if (rhs.tax_ = 'A'){
-            str << 0.23*rhs.price_*rhs.amount_ + rhs.price_*rhs.amount_ << endl;
-        }
-        else if (rhs.tax_ = 'B'){
-            str << 0.8*rhs.price_*rhs.amount_ + rhs.price_*rhs.amount_ << endl;
-        }
-        else if (rhs.tax_ = 'C'){
-            str << rhs.price_*rhs.amount_ << endl;
-        }
-        str << "------------------------------------ TOTAL ----";
-        //str << "                                 "
-        return str;
-    }
+    Item (string name, double price, char tax, int amount);
     
-    void add_item(string name, double price, char tax, int amount){
-        name_= name;
-        price_ = price;
-        tax_ = tax;
-        amount_ = amount;
-    }
+    string get_name();
+    
+    double get_price();
+    
+    char get_tax();
+    
+    int get_amount();
     
     private:
-    long unsigned int buyer_;
-    long unsigned int seller_;
     string name_;
     double price_;
     char tax_;
     int amount_;
 };
+
+class Invoice{
+    public:
+    Invoice(long unsigned int seller, long unsigned int buyer);
+    void add_item(Item item);
+    friend std::ostream &operator<<(std::ostream &str, Invoice &rhs);
+    
+    private:
+    long unsigned int buyer_;
+    long unsigned int seller_;
+    vector<Item> item_;
+};
+

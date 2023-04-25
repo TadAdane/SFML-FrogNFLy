@@ -12,10 +12,12 @@ public:
 
     void deposit(double amount){
         balance_ = balance_ + amount;
+        std::cout << "Account number: " << getAccountNumber() << ": " << "Deposit successful. New balance: " << balance_ << std::endl;
     }
 
     void withdraw(double amount){
         balance_ = balance_ - amount;
+        std::cout << "Account number: " << getAccountNumber() << ": " << "Withdraw successful. New balance: " << balance_ << std::endl;
     }
 
     double getBalance(){
@@ -39,7 +41,8 @@ public:
     }
 
     void withdraw(double amount){
-        balance_ = balance_ - amount;
+        balance_ = balance_ - amount - 1.5;
+        std::cout << "Account number: " << getAccountNumber() << ": " << "Withdraw successful. New balance: " << balance_ << std::endl;
     }
 };
 
@@ -52,7 +55,9 @@ public:
     }
 
     void addInterest(){
-        balance_ = balance_ + (balance_*interestRate_)/100.0;
+        balance_ = balance_ + balance_*(interestRate_/100.0);
+        std::cout << "Account number: " << getAccountNumber() << ": " << "Interest credited. New balance: " << balance_ << std::endl;
+        //std::cout << balance_;
     }
 
     double getInterestRate(){
@@ -74,7 +79,7 @@ public:
 
     void printAccount(){
         for (Account *value : accounts){
-            std::cout << value->getAccountNumber() << "---" << value->getBalance() << " ";
+            std::cout << value->getAccountNumber() << " --- $" << value->getBalance() << "\n";
         }
     }
 
@@ -95,7 +100,7 @@ public:
 
     void printClients(){
         for (auto * value : clients){
-            std::cout << value->getName() << " ";
+            std::cout << "\nAccounts for "<< value->getName() << ":\n";
             value->printAccount();
             std::cout << endl;
         }

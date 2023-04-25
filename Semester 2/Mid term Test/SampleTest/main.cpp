@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unistd.h>
 
 using namespace std;
 
@@ -103,6 +104,7 @@ public:
             std::cout << "\nAccounts for "<< value->getName() << ":\n";
             value->printAccount();
             std::cout << endl;
+            sleep (2);
         }
     }
 
@@ -119,10 +121,15 @@ int main()
 
     // Deposit and withdraw from accounts
     account1.deposit(1000);
+    sleep (2);
     account1.withdraw(2000);
+    sleep (2);
     account2.deposit(500);
+    sleep (2);
     account2.addInterest();
+    sleep (2);
     account3.withdraw(500);
+    sleep (2);
 
     // Create clients and add accounts to them
     Client client1("John Doe");

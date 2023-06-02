@@ -20,7 +20,10 @@ int main()
     const int blastFrameDuration = 5;
     const int barHeight = 20;
     const int ballRadius = 10;
-    const float groundSpeed = 2.0f;
+    float groundSpeed = 2.0f;
+    float holeSpeed = 2.0f;
+    const float maxHoleSpeed = 8.0f;
+    const float speedIncrease = 1.2f;
 
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Ball Game");
     window.setFramerateLimit(60);
@@ -467,6 +470,7 @@ else {
                             ballSprite.move(0, 5);
                             if (!passedHole && ballSprite.getGlobalBounds().intersects(holeBar.getGlobalBounds())) {
                                 passedHole = true;
+                                holeSpeed *= speedIncrease; //Increase speed as score increases.
                                 score++;
                             }
                         }
@@ -479,6 +483,21 @@ else {
                         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && holeBar.getPosition().x > 0) {
                             //ground.move(-groundSpeed, 0);
                             holeBar.move(-groundSpeed, 0);
+                        }
+                    }
+
+                    // Move the hole bar automatically
+                    if (!ballReleased) {
+                        holeBar.move(holeSpeed, 0);
+
+                        // Check for collision with window edges and change direction
+                        if (holeBar.getPosition().x <= 0) {
+                            holeBar.setPosition(0, windowHeight - barHeight);
+                            holeSpeed = -holeSpeed;
+                        }
+                        else if (holeBar.getPosition().x + holeWidth >= windowWidth) {
+                            holeBar.setPosition(windowWidth - holeWidth, windowHeight - barHeight);
+                            holeSpeed = -holeSpeed;
                         }
                     }
 
@@ -501,7 +520,6 @@ else {
 
                     livesText.setString("Lives: " + std::to_string(lives));
                     window.draw(livesText);
-
 
 
                     if (lives <= 0) {

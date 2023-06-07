@@ -24,6 +24,8 @@ int main()
     float holeSpeed = 2.0f;
     const float maxHoleSpeed = 8.0f;
     const float speedIncrease = 1.2f;
+    const int numBlastFrames = 7;
+    const int blastFrameDuration = 5;
 
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Ball Game");
     window.setFramerateLimit(60);
@@ -76,8 +78,13 @@ int main()
 //    holeBar.setOutlineColor(sf::Color::White);
 //    holeBar.setOutlineThickness(1.0f);
     // Ground
-    sf::RectangleShape ground(sf::Vector2f(windowWidth, barHeight));
-    ground.setFillColor(sf::Color::White);
+    sf::Texture groundTexture;
+    if (!groundTexture.loadFromFile("ground.png")) {
+        return EXIT_FAILURE;
+    }
+
+    sf::Sprite ground(groundTexture);
+//    ground.setFillColor(sf::Color::White);
     ground.setPosition(0, windowHeight - barHeight);
 
     // Hole bar
@@ -98,10 +105,18 @@ int main()
     ballSprite.setPosition(rand() % (windowWidth - ballRadius * 2) + ballRadius + 150, 10);
 
     // Blast sprite
+<<<<<<< HEAD
     sf::Texture blastTexture;
     if (!blastTexture.loadFromFile("splash.png")) {
         return EXIT_FAILURE;
     }
+=======
+       sf::Texture blastTexture;
+       if (!blastTexture.loadFromFile("blast.png"))
+       {
+           return EXIT_FAILURE;
+       }
+>>>>>>> c30bbfb (Added blast effect for ball)
 
     sf::Sprite blastSprite(blastTexture);
     int blastFrame = 0;
@@ -110,7 +125,11 @@ int main()
     blastSprite.setTextureRect(sf::IntRect(0, 0, blastTexture.getSize().x / numBlastFrames, blastTexture.getSize().y));
     blastSprite.setOrigin(blastSprite.getTextureRect().width / 2, blastSprite.getTextureRect().height / 2);
     blastSprite.setPosition(windowWidth / 2, windowHeight / 2);
+<<<<<<< HEAD
     ballSprite.setPosition(rand() % (windowWidth - ballRadius * 2) + ballRadius, 0);
+=======
+
+>>>>>>> c30bbfb (Added blast effect for ball)
 
     bool ballReleased = false;
     bool passedHole = false;
@@ -121,11 +140,14 @@ int main()
 
     sf::Vector2f blastPosition;
 
+<<<<<<< HEAD
     sf::Font font1;
     if(!font1.loadFromFile("BITCBLKAD.ttf")){
         return EXIT_FAILURE;
     }
 
+=======
+>>>>>>> c30bbfb (Added blast effect for ball)
     sf::Font font;
     if (!font.loadFromFile("arial.ttf")) {
         return EXIT_FAILURE;
@@ -257,12 +279,12 @@ int main()
     livesText.setPosition(windowWidth - 100, 10);
 
     // Game Over text
-        sf::Text gameOverText;
-        gameOverText.setFont(font);
-        gameOverText.setCharacterSize(40);
-        gameOverText.setFillColor(sf::Color::Red);
-        //gameOverText.setString("Game Over!");
-        gameOverText.setPosition((windowWidth - gameOverText.getLocalBounds().width) / 2, windowHeight / 2);
+    sf::Text gameOverText;
+    gameOverText.setFont(font);
+    gameOverText.setCharacterSize(40);
+    gameOverText.setFillColor(sf::Color::Red);
+    //gameOverText.setString("Game Over!");
+    gameOverText.setPosition((windowWidth - gameOverText.getLocalBounds().width) / 2, windowHeight / 2);
 
     bool gameEnded = false;
 
@@ -458,13 +480,19 @@ else {
 
         if (!gameEnded) {
                     if (ballReleased) {
-                        if (ballSprite.getPosition().y >= windowHeight) {
+                        if (ballSprite.getPosition().y + 25 >= windowHeight) {
                             if (!passedHole) {
                                 lives--;
+
+                                blastPosition = ballSprite.getPosition();
+
+                                blasting = true;
+                                blastFrame = 0;
+                                blastFrameCounter = 0;
                             }
                             ballReleased = false;
                             passedHole = false;
-                            ballSprite.setPosition(rand() % (windowWidth - ballRadius * 2) + ballRadius, 0);
+                            ballSprite.setPosition(rand() % (windowWidth - ballRadius * 2) + ballRadius, 10);
                         }
                         else {
                             ballSprite.move(0, 5);
@@ -475,16 +503,17 @@ else {
                             }
                         }
                     }
-                    else {
-                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && holeBar.getPosition().x + holeWidth < windowWidth) {
-                            //ground.move(groundSpeed, 0);
-                            holeBar.move(groundSpeed, 0);
-                        }
-                        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && holeBar.getPosition().x > 0) {
-                            //ground.move(-groundSpeed, 0);
-                            holeBar.move(-groundSpeed, 0);
-                        }
-                    }
+//                    else {
+//                        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && holeBar.getPosition().x + holeWidth < windowWidth) {
+//                            //ground.move(groundSpeed, 0);
+//                            holeBar.move(groundSpeed, 0);
+////                            blasting = true;
+//                        }
+//                        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && holeBar.getPosition().x > 0) {
+//                            //ground.move(-groundSpeed, 0);
+//                            holeBar.move(-groundSpeed, 0);
+//                        }
+//                    }
 
                     // Move the hole bar automatically
                     if (!ballReleased) {
@@ -514,6 +543,21 @@ else {
 
                     // Draw ball sprite
                     window.draw(ballSprite);
+
+                    if (blasting){
+                        blastFrameCounter++;
+                        if (blastFrameCounter >= blastFrameDuration){
+                            blastFrame++;
+                            blastFrameCounter = 0;
+                            if (blastFrame >= numBlastFrames){
+                                blasting = false;
+                                blastFrame = 0;
+                                }
+                        }
+                        blastSprite.setTextureRect(sf::IntRect(blastFrame * blastSprite.getTextureRect().width, 0, blastSprite.getTextureRect().width, blastSprite.getTextureRect().height));
+                        blastSprite.setPosition(blastPosition);
+                        window.draw(blastSprite);
+                    }
 
                     scoreText.setString("Score: " + std::to_string(score));
                     window.draw(scoreText);

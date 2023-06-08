@@ -54,6 +54,7 @@ int main()
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 3fcc762 (Added Instructions)
     // How to Play image
@@ -70,6 +71,8 @@ int main()
 >>>>>>> 7ec9272 (Added Gameover background)
 =======
 >>>>>>> 3fcc762 (Added Instructions)
+=======
+>>>>>>> 7ec9272 (Added Gameover background)
     // Game over image
     sf::Texture gameoverTexture;
     if (!gameoverTexture.loadFromFile("gameover.png")) {
@@ -79,6 +82,9 @@ int main()
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 7ec9272 (Added Gameover background)
     // Ground
     sf::Texture groundTexture;
     if (!groundTexture.loadFromFile("swampWater.jpg")) {
@@ -260,8 +266,13 @@ int main()
 
     // Restart button
     sf::Text restartButton;
+<<<<<<< HEAD
     restartButton.setFont(font1);
     restartButton.setCharacterSize(70);
+=======
+    restartButton.setFont(font);
+    restartButton.setCharacterSize(20);
+>>>>>>> 7ec9272 (Added Gameover background)
     restartButton.setFillColor(sf::Color::Green);
     restartButton.setString("Restart");
     restartButton.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2,
@@ -582,6 +593,7 @@ if (gameStarted) {
 
             if (lives <= 0) {
                 gameEnded = true;
+<<<<<<< HEAD
                 music1.pause();
 //                sleep(1);
 
@@ -591,6 +603,12 @@ if (gameStarted) {
                                          (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2 - 75);
                 gameOverText.setString("Your Score is: " + std::to_string(score));
                 window.draw(gameoverSprite);
+=======
+                window.draw(gameoverSprite);
+                restartButton.setPosition((windowWidth - restartButton.getLocalBounds().width) / 2, (windowHeight - restartButton.getLocalBounds().height) / 2 + 100);
+                gameOverText.setPosition((windowWidth - gameOverText.getLocalBounds().width) / 2, (windowHeight - gameOverText.getLocalBounds().height) / 2);
+                gameOverText.setString("Game Over! \nYour Score is: " + std::to_string(score));
+>>>>>>> 7ec9272 (Added Gameover background)
                 window.draw(gameOverText);
                 window.draw(restartButton);
             }

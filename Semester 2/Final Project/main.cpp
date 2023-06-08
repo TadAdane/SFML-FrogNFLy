@@ -47,6 +47,7 @@ int main()
     }
     sf::Sprite backgroundSprite(backgroundTexture);
 
+<<<<<<< HEAD
     // How to Play image
     sf::Texture howToPlayTexture;
     if (!howToPlayTexture.loadFromFile("howToPlay.png")) {
@@ -56,6 +57,8 @@ int main()
     howToPlaySprite.setPosition(150, 75);
 
 
+=======
+>>>>>>> 7ec9272 (Added Gameover background)
     // Game over image
     sf::Texture gameoverTexture;
     if (!gameoverTexture.loadFromFile("gameover.png")) {
@@ -64,6 +67,7 @@ int main()
     sf::Sprite gameoverSprite(gameoverTexture);
 
 
+<<<<<<< HEAD
     // Ground
     sf::Texture groundTexture;
     if (!groundTexture.loadFromFile("swampWater.jpg")) {
@@ -86,6 +90,8 @@ int main()
 //    holeBar.setFillColor(sf::Color::Black);
 //    holeBar.setOutlineColor(sf::Color::White);
 //    holeBar.setOutlineThickness(1.0f);
+=======
+>>>>>>> 7ec9272 (Added Gameover background)
     // Ground
     sf::Texture groundTexture;
     if (!groundTexture.loadFromFile("ground.png")) {
@@ -135,7 +141,7 @@ int main()
 >>>>>>> c30bbfb (Added blast effect for ball)
 =======
     sf::Texture blastTexture;
-    if (!blastTexture.loadFromFile("blast_.png")) {
+    if (!blastTexture.loadFromFile("splash.png")) {
         return EXIT_FAILURE;
     }
 >>>>>>> 2185298 (Added Restart Button)
@@ -315,7 +321,7 @@ int main()
     sf::Text restartButton;
     restartButton.setFont(font);
     restartButton.setCharacterSize(20);
-    restartButton.setFillColor(sf::Color::White);
+    restartButton.setFillColor(sf::Color::Green);
     restartButton.setString("Restart");
     restartButton.setPosition((windowWidth - restartButton.getLocalBounds().width) / 2, (windowHeight - restartButton.getLocalBounds().height) / 2 + 100);
 
@@ -647,6 +653,7 @@ if (gameStarted) {
 
             if (lives <= 0) {
                 gameEnded = true;
+                window.draw(gameoverSprite);
                 restartButton.setPosition((windowWidth - restartButton.getLocalBounds().width) / 2, (windowHeight - restartButton.getLocalBounds().height) / 2 + 100);
                 gameOverText.setPosition((windowWidth - gameOverText.getLocalBounds().width) / 2, (windowHeight - gameOverText.getLocalBounds().height) / 2);
                 gameOverText.setString("Game Over! \nYour Score is: " + std::to_string(score));

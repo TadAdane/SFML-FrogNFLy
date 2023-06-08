@@ -27,6 +27,14 @@ int main()
     }
     sf::Sprite backgroundSprite(backgroundTexture);
 
+    // Game over image
+    sf::Texture gameoverTexture;
+    if (!gameoverTexture.loadFromFile("gameover.png")) {
+        return EXIT_FAILURE;
+    }
+    sf::Sprite gameoverSprite(gameoverTexture);
+
+
     // Ground
     sf::Texture groundTexture;
     if (!groundTexture.loadFromFile("ground.png")) {
@@ -62,7 +70,7 @@ int main()
 
     // Blast sprite
     sf::Texture blastTexture;
-    if (!blastTexture.loadFromFile("blast_.png")) {
+    if (!blastTexture.loadFromFile("splash.png")) {
         return EXIT_FAILURE;
     }
 
@@ -114,7 +122,7 @@ int main()
     sf::Text restartButton;
     restartButton.setFont(font);
     restartButton.setCharacterSize(20);
-    restartButton.setFillColor(sf::Color::White);
+    restartButton.setFillColor(sf::Color::Green);
     restartButton.setString("Restart");
     restartButton.setPosition((windowWidth - restartButton.getLocalBounds().width) / 2, (windowHeight - restartButton.getLocalBounds().height) / 2 + 100);
 
@@ -274,6 +282,7 @@ if (gameStarted) {
 
             if (lives <= 0) {
                 gameEnded = true;
+                window.draw(gameoverSprite);
                 restartButton.setPosition((windowWidth - restartButton.getLocalBounds().width) / 2, (windowHeight - restartButton.getLocalBounds().height) / 2 + 100);
                 gameOverText.setPosition((windowWidth - gameOverText.getLocalBounds().width) / 2, (windowHeight - gameOverText.getLocalBounds().height) / 2);
                 gameOverText.setString("Game Over! \nYour Score is: " + std::to_string(score));

@@ -8,7 +8,7 @@ int main()
 {
     const int windowWidth = 800;
     const int windowHeight = 600;
-    const int barHeight = 20;
+    const int barHeight = 74;
     const int ballRadius = 10;
     float groundSpeed = 2.0f;
     float holeSpeed = 2.0f;
@@ -22,7 +22,7 @@ int main()
 
     // Background image
     sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile("Background.jpg")) {
+    if (!backgroundTexture.loadFromFile("Background_.jpg")) {
         return EXIT_FAILURE;
     }
     sf::Sprite backgroundSprite(backgroundTexture);
@@ -35,19 +35,25 @@ int main()
 
     sf::Sprite ground(groundTexture);
 //    ground.setFillColor(sf::Color::White);
-    ground.setPosition(0, windowHeight - barHeight);
+    ground.setPosition(0, windowHeight - barHeight + 54);
 
     // Hole bar
+    sf::Texture holeTexture;
+    if (!holeTexture.loadFromFile("hole_frog.png")) {
+        return EXIT_FAILURE;
+    }
+
+    sf::Sprite holeBar(holeTexture);
     float holeWidth = 80.0f;
-    sf::RectangleShape holeBar(sf::Vector2f(holeWidth, barHeight));
-    holeBar.setFillColor(sf::Color::Black);
-    holeBar.setOutlineColor(sf::Color::White);
-    holeBar.setOutlineThickness(1.0f);
+//    sf::RectangleShape holeBar(sf::Vector2f(holeWidth, barHeight));
+//    holeBar.setFillColor(sf::Color::Black);
+//    holeBar.setOutlineColor(sf::Color::White);
+//    holeBar.setOutlineThickness(1.0f);
     holeBar.setPosition((windowWidth - holeWidth) / 2, windowHeight - barHeight);
 
     // Ball sprite
     sf::Texture ballTexture;
-    if (!ballTexture.loadFromFile("ball.png")) {
+    if (!ballTexture.loadFromFile("fly.png")) {
         return EXIT_FAILURE;
     }
     sf::Sprite ballSprite(ballTexture);
@@ -56,7 +62,7 @@ int main()
 
     // Blast sprite
     sf::Texture blastTexture;
-    if (!blastTexture.loadFromFile("blast.png")) {
+    if (!blastTexture.loadFromFile("blast_.png")) {
         return EXIT_FAILURE;
     }
 
@@ -126,6 +132,35 @@ int main()
     blastSound.setBuffer(blastSoundBuffer);
 
 
+    // Background image
+
+    const int buttonWidth = 200;
+    const int buttonHeight = 50;
+
+    sf::Texture startTexture;
+    if (!startTexture.loadFromFile("start.png")) {
+        return EXIT_FAILURE;
+    }
+    sf::Sprite startSprite(startTexture);
+
+    // Start button
+    sf::RectangleShape startButton(sf::Vector2f(buttonWidth, buttonHeight));
+    startButton.setFillColor(sf::Color::Green);
+    startButton.setPosition((windowWidth - buttonWidth) / 2, (windowHeight - buttonHeight) / 2);
+
+    // Start text
+    sf::Text startText;
+    startText.setFont(font);
+    startText.setCharacterSize(20);
+    startText.setFillColor(sf::Color::White);
+    startText.setString("Start");
+    startText.setPosition(startButton.getPosition().x + (buttonWidth - startText.getLocalBounds().width) / 2,
+                          startButton.getPosition().y + (buttonHeight - startText.getLocalBounds().height) / 2);
+
+    bool gameStarted = false;
+
+
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -140,6 +175,9 @@ int main()
             else if (event.type == sf::Event::MouseButtonPressed) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+                    if (startButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                                            gameStarted = true;
+                                        }
                     if (restartButton.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
                         // Reset game variables
                         score = 0;
@@ -153,7 +191,7 @@ int main()
                 }
             }
         }
-
+if (gameStarted) {
         if (!gameEnded) {
             if (ballReleased) {
                 if (ballSprite.getPosition().y + 25 >= windowHeight) {
@@ -227,6 +265,7 @@ int main()
                 window.draw(blastSprite);
             }
 
+
             scoreText.setString("Score: " + std::to_string(score));
             window.draw(scoreText);
 
@@ -262,6 +301,15 @@ int main()
             restartClicked = false;
         }
     }
+else {
+           window.clear();
+           // Draw start screen elements
+           window.draw(startSprite);
+           window.draw(startButton);
+           window.draw(startText);
+           window.display();
+       }
+}
 
     return 0;
 }

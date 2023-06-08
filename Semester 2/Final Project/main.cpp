@@ -14,6 +14,7 @@ int main()
     const int windowWidth = 800;
     const int windowHeight = 600;
     const int barHeight = 74;
+<<<<<<< HEAD
     const int ballRadius = 10;
     float groundSpeed = 2.0f;
     float holeSpeed = 2.0f;
@@ -22,6 +23,8 @@ int main()
     const int numBlastFrames = 7;
     const int blastFrameDuration = 5;
     const int barHeight = 20;
+=======
+>>>>>>> 0275351 (Added a start button and edited sprites)
     const int ballRadius = 10;
     float groundSpeed = 2.0f;
     float holeSpeed = 2.0f;
@@ -36,7 +39,10 @@ int main()
     // Background image
     sf::Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("Background_.jpg")) {
+<<<<<<< HEAD
     if (!backgroundTexture.loadFromFile("Background.jpg")) {
+=======
+>>>>>>> 0275351 (Added a start button and edited sprites)
         return EXIT_FAILURE;
     }
     sf::Sprite backgroundSprite(backgroundTexture);
@@ -88,19 +94,25 @@ int main()
 
     sf::Sprite ground(groundTexture);
 //    ground.setFillColor(sf::Color::White);
-    ground.setPosition(0, windowHeight - barHeight);
+    ground.setPosition(0, windowHeight - barHeight + 54);
 
     // Hole bar
+    sf::Texture holeTexture;
+    if (!holeTexture.loadFromFile("hole_frog.png")) {
+        return EXIT_FAILURE;
+    }
+
+    sf::Sprite holeBar(holeTexture);
     float holeWidth = 80.0f;
-    sf::RectangleShape holeBar(sf::Vector2f(holeWidth, barHeight));
-    holeBar.setFillColor(sf::Color::Black);
-    holeBar.setOutlineColor(sf::Color::White);
-    holeBar.setOutlineThickness(1.0f);
+//    sf::RectangleShape holeBar(sf::Vector2f(holeWidth, barHeight));
+//    holeBar.setFillColor(sf::Color::Black);
+//    holeBar.setOutlineColor(sf::Color::White);
+//    holeBar.setOutlineThickness(1.0f);
     holeBar.setPosition((windowWidth - holeWidth) / 2, windowHeight - barHeight);
 
     // Ball sprite
     sf::Texture ballTexture;
-    if (!ballTexture.loadFromFile("ball.png")) {
+    if (!ballTexture.loadFromFile("fly.png")) {
         return EXIT_FAILURE;
     }
     sf::Sprite ballSprite(ballTexture);
@@ -123,7 +135,7 @@ int main()
 >>>>>>> c30bbfb (Added blast effect for ball)
 =======
     sf::Texture blastTexture;
-    if (!blastTexture.loadFromFile("blast.png")) {
+    if (!blastTexture.loadFromFile("blast_.png")) {
         return EXIT_FAILURE;
     }
 >>>>>>> 2185298 (Added Restart Button)
@@ -321,6 +333,35 @@ int main()
     blastSound.setBuffer(blastSoundBuffer);
 
 
+    // Background image
+
+    const int buttonWidth = 200;
+    const int buttonHeight = 50;
+
+    sf::Texture startTexture;
+    if (!startTexture.loadFromFile("start.png")) {
+        return EXIT_FAILURE;
+    }
+    sf::Sprite startSprite(startTexture);
+
+    // Start button
+    sf::RectangleShape startButton(sf::Vector2f(buttonWidth, buttonHeight));
+    startButton.setFillColor(sf::Color::Green);
+    startButton.setPosition((windowWidth - buttonWidth) / 2, (windowHeight - buttonHeight) / 2);
+
+    // Start text
+    sf::Text startText;
+    startText.setFont(font);
+    startText.setCharacterSize(20);
+    startText.setFillColor(sf::Color::White);
+    startText.setString("Start");
+    startText.setPosition(startButton.getPosition().x + (buttonWidth - startText.getLocalBounds().width) / 2,
+                          startButton.getPosition().y + (buttonHeight - startText.getLocalBounds().height) / 2);
+
+    bool gameStarted = false;
+
+
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -336,6 +377,7 @@ int main()
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 <<<<<<< HEAD
+<<<<<<< HEAD
                     if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                         clickSound.play();
                                             gameStarted = true;
@@ -346,6 +388,11 @@ int main()
                         clickSound.play();
                                             continueClicked = true;
                                         }
+=======
+                    if (startButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                                            gameStarted = true;
+                                        }
+>>>>>>> 0275351 (Added a start button and edited sprites)
                     if (restartButton.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
                         clickSound.stop();
                         clickSound.play();
@@ -517,7 +564,7 @@ else {
 =======
 >>>>>>> 2185298 (Added Restart Button)
         }
-
+if (gameStarted) {
         if (!gameEnded) {
             if (ballReleased) {
                 if (ballSprite.getPosition().y + 25 >= windowHeight) {
@@ -591,6 +638,7 @@ else {
                 window.draw(blastSprite);
             }
 
+
             scoreText.setString("Score: " + std::to_string(score));
             window.draw(scoreText);
 
@@ -626,6 +674,15 @@ else {
             restartClicked = false;
         }
     }
+else {
+           window.clear();
+           // Draw start screen elements
+           window.draw(startSprite);
+           window.draw(startButton);
+           window.draw(startText);
+           window.display();
+       }
+}
 
     return 0;
 }

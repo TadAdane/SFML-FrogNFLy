@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include <SFML/Audio.hpp>
+
 
 int main()
 {
@@ -113,6 +115,17 @@ int main()
     bool gameEnded = false;
     bool restartClicked = false;
 
+    // Blast sound effect
+
+    sf::SoundBuffer blastSoundBuffer;
+    if (!blastSoundBuffer.loadFromFile("Explosion_.wav")) {
+        return EXIT_FAILURE;
+    }
+
+    sf::Sound blastSound;
+    blastSound.setBuffer(blastSoundBuffer);
+
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -150,8 +163,11 @@ int main()
                         blastPosition = ballSprite.getPosition();
 
                         blasting = true;
+                        blastSound.play();
+
                         blastFrame = 0;
                         blastFrameCounter = 0;
+
                     }
                     ballReleased = false;
                     passedHole = false;

@@ -3,10 +3,15 @@
 #include <iostream>
 #include <SFML/Audio.hpp>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <unistd.h>
 #include <ctime>
 =======
 >>>>>>> 42d99f0 (Added Blast sound effect)
+=======
+#include <unistd.h>
+#include <ctime>
+>>>>>>> e18a912 (Added soundtrack)
 
 
 int main()
@@ -94,7 +99,7 @@ int main()
 >>>>>>> 7ec9272 (Added Gameover background)
     // Ground
     sf::Texture groundTexture;
-    if (!groundTexture.loadFromFile("ground.png")) {
+    if (!groundTexture.loadFromFile("swampWater.jpg")) {
         return EXIT_FAILURE;
     }
 
@@ -172,30 +177,39 @@ int main()
     sf::Vector2f blastPosition;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e18a912 (Added soundtrack)
     sf::Font font1;
     if(!font1.loadFromFile("BITCBLKAD.ttf")){
         return EXIT_FAILURE;
     }
 
+<<<<<<< HEAD
 =======
 >>>>>>> c30bbfb (Added blast effect for ball)
+=======
+>>>>>>> e18a912 (Added soundtrack)
     sf::Font font;
     if (!font.loadFromFile("arial.ttf")) {
         return EXIT_FAILURE;
     }
     sf::Color color1(255, 178, 102);
+<<<<<<< HEAD
 
     // Score text
     sf::Text scoreText;
     scoreText.setFont(font1);
     scoreText.setCharacterSize(30);
     scoreText.setFillColor(color1);
+=======
+>>>>>>> e18a912 (Added soundtrack)
 
     // Score text
     sf::Text scoreText;
-    scoreText.setFont(font);
-    scoreText.setCharacterSize(20);
-    scoreText.setFillColor(sf::Color::White);
+    scoreText.setFont(font1);
+    scoreText.setCharacterSize(30);
+    scoreText.setFillColor(color1);
     scoreText.setPosition(10, 10);
 
     // Lives text
@@ -203,6 +217,7 @@ int main()
     livesText.setFont(font1);
     livesText.setCharacterSize(30);
     livesText.setFillColor(color1);
+<<<<<<< HEAD
     livesText.setPosition(windowWidth - 100, 10);
 
     // Game Over text
@@ -307,23 +322,40 @@ int main()
     livesText.setFont(font);
     livesText.setCharacterSize(20);
     livesText.setFillColor(sf::Color::White);
+=======
+>>>>>>> e18a912 (Added soundtrack)
     livesText.setPosition(windowWidth - 100, 10);
 
     // Game Over text
+    sf::Color color(0, 76, 156);
+
     sf::Text gameOverText;
-    gameOverText.setFont(font);
-    gameOverText.setCharacterSize(40);
-    gameOverText.setFillColor(sf::Color::Red);
+    gameOverText.setFont(font1);
+    gameOverText.setCharacterSize(60);
+    gameOverText.setFillColor(color);
     //gameOverText.setString("Game Over!");
     gameOverText.setPosition((windowWidth - gameOverText.getLocalBounds().width) / 2, windowHeight / 2);
 
+    const int buttonWidth = 200;
+    const int buttonHeight = 50;
+
+    // Start text
+    sf::Text startText;
+    startText.setFont(font1);
+    startText.setCharacterSize(70);
+    startText.setFillColor(color);
+    startText.setString("Start");
+    startText.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2,
+                          (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2);
+
     // Restart button
     sf::Text restartButton;
-    restartButton.setFont(font);
-    restartButton.setCharacterSize(20);
+    restartButton.setFont(font1);
+    restartButton.setCharacterSize(70);
     restartButton.setFillColor(sf::Color::Green);
     restartButton.setString("Restart");
-    restartButton.setPosition((windowWidth - restartButton.getLocalBounds().width) / 2, (windowHeight - restartButton.getLocalBounds().height) / 2 + 100);
+    restartButton.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2,
+                              (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2);
 
     bool gameEnded = false;
     bool restartClicked = false;
@@ -331,7 +363,7 @@ int main()
     // Blast sound effect
 
     sf::SoundBuffer blastSoundBuffer;
-    if (!blastSoundBuffer.loadFromFile("Explosion_.wav")) {
+    if (!blastSoundBuffer.loadFromFile("splash.wav")) {
         return EXIT_FAILURE;
     }
 
@@ -339,10 +371,17 @@ int main()
     blastSound.setBuffer(blastSoundBuffer);
 
 
+    sf::Music music;
+        if (!music.openFromFile("Soundtrack.wav"))
+        {
+            return EXIT_FAILURE;
+        }
+        music.setLoop(true);
+        music.play();
+
+
     // Background image
 
-    const int buttonWidth = 200;
-    const int buttonHeight = 50;
 
     sf::Texture startTexture;
     if (!startTexture.loadFromFile("start.png")) {
@@ -351,22 +390,15 @@ int main()
     sf::Sprite startSprite(startTexture);
 
     // Start button
-    sf::RectangleShape startButton(sf::Vector2f(buttonWidth, buttonHeight));
-    startButton.setFillColor(sf::Color::Green);
-    startButton.setPosition((windowWidth - buttonWidth) / 2, (windowHeight - buttonHeight) / 2);
+//    sf::RectangleShape startButton(sf::Vector2f(buttonWidth, buttonHeight));
+//    startButton.setFillColor(color);
+//    startButton.setPosition((windowWidth - buttonWidth) / 2, (windowHeight - buttonHeight) / 2);
 
-    // Start text
-    sf::Text startText;
-    startText.setFont(font);
-    startText.setCharacterSize(20);
-    startText.setFillColor(sf::Color::White);
-    startText.setString("Start");
-    startText.setPosition(startButton.getPosition().x + (buttonWidth - startText.getLocalBounds().width) / 2,
-                          startButton.getPosition().y + (buttonHeight - startText.getLocalBounds().height) / 2);
+
 
     bool gameStarted = false;
 
-
+//    srand(NULL);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -384,6 +416,7 @@ int main()
                     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                     if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                         clickSound.play();
                                             gameStarted = true;
@@ -396,6 +429,9 @@ int main()
                                         }
 =======
                     if (startButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+=======
+                    if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+>>>>>>> e18a912 (Added soundtrack)
                                             gameStarted = true;
                                         }
 >>>>>>> 0275351 (Added a start button and edited sprites)
@@ -571,11 +607,12 @@ else {
 >>>>>>> 2185298 (Added Restart Button)
         }
 if (gameStarted) {
+    music.stop();
         if (!gameEnded) {
             if (ballReleased) {
                 if (ballSprite.getPosition().y + 25 >= windowHeight) {
                     if (!passedHole) {
-                        lives--;
+
 
                         blastPosition = ballSprite.getPosition();
 
@@ -584,6 +621,7 @@ if (gameStarted) {
 
                         blastFrame = 0;
                         blastFrameCounter = 0;
+                        lives--;
 
                     }
                     ballReleased = false;
@@ -592,7 +630,11 @@ if (gameStarted) {
                 }
                 else {
                     ballSprite.move(0, 5);
-                    if (!passedHole && ballSprite.getGlobalBounds().intersects(holeBar.getGlobalBounds())) {
+                    if (!passedHole && ballSprite.getPosition().x + ballRadius >= holeBar.getPosition().x &&
+                                       ballSprite.getPosition().x - ballRadius <= holeBar.getPosition().x + holeWidth &&
+                                       ballSprite.getPosition().y + ballRadius >= holeBar.getPosition().y &&
+                                       ballSprite.getPosition().y - ballRadius <= holeBar.getPosition().y + barHeight)
+                                   {
                         passedHole = true;
                         holeSpeed *= speedIncrease; //Increase speed as score increases.
                         score++;
@@ -653,10 +695,14 @@ if (gameStarted) {
 
             if (lives <= 0) {
                 gameEnded = true;
+//                sleep(1);
+
+                restartButton.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2,
+                                          (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2 + 15);
+                gameOverText.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2 - 70,
+                                         (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2 - 75);
+                gameOverText.setString("Your Score is: " + std::to_string(score));
                 window.draw(gameoverSprite);
-                restartButton.setPosition((windowWidth - restartButton.getLocalBounds().width) / 2, (windowHeight - restartButton.getLocalBounds().height) / 2 + 100);
-                gameOverText.setPosition((windowWidth - gameOverText.getLocalBounds().width) / 2, (windowHeight - gameOverText.getLocalBounds().height) / 2);
-                gameOverText.setString("Game Over! \nYour Score is: " + std::to_string(score));
                 window.draw(gameOverText);
                 window.draw(restartButton);
             }
@@ -682,11 +728,14 @@ if (gameStarted) {
         }
     }
 else {
+
            window.clear();
+
            // Draw start screen elements
            window.draw(startSprite);
-           window.draw(startButton);
+//           window.draw(startButton);
            window.draw(startText);
+
            window.display();
        }
 }

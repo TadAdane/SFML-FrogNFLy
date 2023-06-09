@@ -53,6 +53,9 @@ int main()
     sf::Sprite backgroundSprite(backgroundTexture);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3fcc762 (Added Instructions)
     // How to Play image
     sf::Texture howToPlayTexture;
     if (!howToPlayTexture.loadFromFile("howToPlay.png")) {
@@ -62,8 +65,11 @@ int main()
     howToPlaySprite.setPosition(150, 75);
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> 7ec9272 (Added Gameover background)
+=======
+>>>>>>> 3fcc762 (Added Instructions)
     // Game over image
     sf::Texture gameoverTexture;
     if (!gameoverTexture.loadFromFile("gameover.png")) {
@@ -348,6 +354,16 @@ int main()
     startText.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2,
                           (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2);
 
+    // continue text
+    sf::Text continueText;
+    continueText.setFont(font1);
+    continueText.setCharacterSize(70);
+    continueText.setFillColor(sf::Color::Green);
+    continueText.setString("Continue");
+    continueText.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2 + 200,
+                          (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2 + 200);
+
+
     // Restart button
     sf::Text restartButton;
     restartButton.setFont(font1);
@@ -359,6 +375,7 @@ int main()
 
     bool gameEnded = false;
     bool restartClicked = false;
+    bool continueClicked = false;
 
     // Blast sound effect
 
@@ -378,7 +395,22 @@ int main()
         }
         music.setLoop(true);
         music.play();
+    sf::Music music1;
+        if (!music1.openFromFile("Soundtrack.wav"))
+        {
+            return EXIT_FAILURE;
+        }
+        music1.setLoop(true);
+//            music1.play();
 
+        // Click sound
+        sf::Music clickSound;
+            if (!clickSound.openFromFile("Click.wav"))
+            {
+                return EXIT_FAILURE;
+            }
+//            music.setLoop(true);
+//            music.play();
 
     // Background image
 
@@ -427,6 +459,7 @@ int main()
                         clickSound.play();
                                             continueClicked = true;
                                         }
+<<<<<<< HEAD
 =======
                     if (startButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
 =======
@@ -441,6 +474,11 @@ int main()
 =======
                     if (restartButton.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
 >>>>>>> 2185298 (Added Restart Button)
+=======
+                    if (restartButton.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
+                        clickSound.stop();
+                        clickSound.play();
+>>>>>>> 3fcc762 (Added Instructions)
                         // Reset game variables
                         score = 0;
                         lives = 3;
@@ -607,6 +645,7 @@ else {
 >>>>>>> 2185298 (Added Restart Button)
         }
 if (gameStarted) {
+    if (continueClicked){
     music.stop();
         if (!gameEnded) {
             if (ballReleased) {
@@ -695,6 +734,7 @@ if (gameStarted) {
 
             if (lives <= 0) {
                 gameEnded = true;
+                music1.pause();
 //                sleep(1);
 
                 restartButton.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2,
@@ -710,7 +750,9 @@ if (gameStarted) {
             window.display();
         }
 
+
         if (restartClicked) {
+            music1.play();
             // Reset hole bar position
             holeBar.setPosition((windowWidth - holeWidth) / 2, windowHeight - barHeight);
 
@@ -726,11 +768,20 @@ if (gameStarted) {
             gameEnded = false;
             restartClicked = false;
         }
+     }
+    else {
+        music1.play();
+        window.clear();
+        window.draw(backgroundSprite);
+        window.draw(howToPlaySprite);
+        window.draw(continueText);
+        window.display();
+    }
     }
 else {
 
            window.clear();
-
+//           music1.play();
            // Draw start screen elements
            window.draw(startSprite);
 //           window.draw(startButton);

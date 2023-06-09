@@ -4,10 +4,15 @@
 #include <SFML/Audio.hpp>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <unistd.h>
 #include <ctime>
 =======
 >>>>>>> 42d99f0 (Added Blast sound effect)
+=======
+#include <unistd.h>
+#include <ctime>
+>>>>>>> e18a912 (Added soundtrack)
 =======
 #include <unistd.h>
 #include <ctime>
@@ -88,6 +93,7 @@ int main()
     // Ground
     sf::Texture groundTexture;
     if (!groundTexture.loadFromFile("swampWater.jpg")) {
+<<<<<<< HEAD
         return EXIT_FAILURE;
     }
 
@@ -112,6 +118,8 @@ int main()
     // Ground
     sf::Texture groundTexture;
     if (!groundTexture.loadFromFile("swampWater.jpg")) {
+=======
+>>>>>>> e18a912 (Added soundtrack)
         return EXIT_FAILURE;
     }
 
@@ -190,6 +198,9 @@ int main()
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e18a912 (Added soundtrack)
 =======
 >>>>>>> e18a912 (Added soundtrack)
     sf::Font font1;
@@ -198,8 +209,11 @@ int main()
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> c30bbfb (Added blast effect for ball)
+=======
+>>>>>>> e18a912 (Added soundtrack)
 =======
 >>>>>>> e18a912 (Added soundtrack)
     sf::Font font;
@@ -208,12 +222,7 @@ int main()
     }
     sf::Color color1(255, 178, 102);
 <<<<<<< HEAD
-
-    // Score text
-    sf::Text scoreText;
-    scoreText.setFont(font1);
-    scoreText.setCharacterSize(30);
-    scoreText.setFillColor(color1);
+<<<<<<< HEAD
 =======
 >>>>>>> e18a912 (Added soundtrack)
 
@@ -222,6 +231,17 @@ int main()
     scoreText.setFont(font1);
     scoreText.setCharacterSize(30);
     scoreText.setFillColor(color1);
+<<<<<<< HEAD
+=======
+>>>>>>> e18a912 (Added soundtrack)
+
+    // Score text
+    sf::Text scoreText;
+    scoreText.setFont(font1);
+    scoreText.setCharacterSize(30);
+    scoreText.setFillColor(color1);
+=======
+>>>>>>> e18a912 (Added soundtrack)
     scoreText.setPosition(10, 10);
 
     // Lives text
@@ -230,6 +250,9 @@ int main()
     livesText.setCharacterSize(30);
     livesText.setFillColor(color1);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e18a912 (Added soundtrack)
     livesText.setPosition(windowWidth - 100, 10);
 
     // Game Over text
@@ -254,6 +277,7 @@ int main()
     startText.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2,
                           (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2);
 
+<<<<<<< HEAD
     // continue text
     sf::Text continueText;
     continueText.setFont(font1);
@@ -273,6 +297,12 @@ int main()
     restartButton.setFont(font);
     restartButton.setCharacterSize(20);
 >>>>>>> 7ec9272 (Added Gameover background)
+=======
+    // Restart button
+    sf::Text restartButton;
+    restartButton.setFont(font1);
+    restartButton.setCharacterSize(70);
+>>>>>>> e18a912 (Added soundtrack)
     restartButton.setFillColor(sf::Color::Green);
     restartButton.setString("Restart");
     restartButton.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2,
@@ -300,6 +330,7 @@ int main()
         }
         music.setLoop(true);
         music.play();
+<<<<<<< HEAD
     sf::Music music1;
         if (!music1.openFromFile("Soundtrack.wav"))
         {
@@ -316,6 +347,9 @@ int main()
             }
 //            music.setLoop(true);
 //            music.play();
+=======
+
+>>>>>>> e18a912 (Added soundtrack)
 
     // Background image
 
@@ -336,6 +370,7 @@ int main()
     bool gameStarted = false;
 
 //    srand(NULL);
+<<<<<<< HEAD
     livesText.setFont(font);
     livesText.setCharacterSize(20);
     livesText.setFillColor(sf::Color::White);
@@ -442,6 +477,8 @@ int main()
     bool gameStarted = false;
 
 //    srand(NULL);
+=======
+>>>>>>> e18a912 (Added soundtrack)
 
     while (window.isOpen()) {
         sf::Event event;
@@ -460,8 +497,12 @@ int main()
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                     if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                         clickSound.play();
+=======
+                    if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+>>>>>>> e18a912 (Added soundtrack)
                                             gameStarted = true;
                                         }
 
@@ -504,7 +545,10 @@ int main()
 <<<<<<< HEAD
         }
 if (gameStarted) {
+<<<<<<< HEAD
     if (continueClicked){
+=======
+>>>>>>> e18a912 (Added soundtrack)
     music.stop();
         if (!gameEnded) {
             if (ballReleased) {
@@ -594,7 +638,10 @@ if (gameStarted) {
             if (lives <= 0) {
                 gameEnded = true;
 <<<<<<< HEAD
+<<<<<<< HEAD
                 music1.pause();
+=======
+>>>>>>> e18a912 (Added soundtrack)
 //                sleep(1);
 
                 restartButton.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2,
@@ -602,6 +649,7 @@ if (gameStarted) {
                 gameOverText.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2 - 70,
                                          (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2 - 75);
                 gameOverText.setString("Your Score is: " + std::to_string(score));
+<<<<<<< HEAD
                 window.draw(gameoverSprite);
 =======
                 window.draw(gameoverSprite);
@@ -609,6 +657,9 @@ if (gameStarted) {
                 gameOverText.setPosition((windowWidth - gameOverText.getLocalBounds().width) / 2, (windowHeight - gameOverText.getLocalBounds().height) / 2);
                 gameOverText.setString("Game Over! \nYour Score is: " + std::to_string(score));
 >>>>>>> 7ec9272 (Added Gameover background)
+=======
+                window.draw(gameoverSprite);
+>>>>>>> e18a912 (Added soundtrack)
                 window.draw(gameOverText);
                 window.draw(restartButton);
             }
@@ -647,12 +698,17 @@ if (gameStarted) {
 else {
 
            window.clear();
+<<<<<<< HEAD
 //           music1.play();
+=======
+
+>>>>>>> e18a912 (Added soundtrack)
            // Draw start screen elements
            window.draw(startSprite);
 //           window.draw(startButton);
            window.draw(startText);
 
+<<<<<<< HEAD
            window.display();
        }
 }
@@ -805,6 +861,8 @@ else {
 //           window.draw(startButton);
            window.draw(startText);
 
+=======
+>>>>>>> e18a912 (Added soundtrack)
            window.display();
        }
 }

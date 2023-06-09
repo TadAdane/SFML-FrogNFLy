@@ -60,6 +60,9 @@ int main()
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3fcc762 (Added Instructions)
 =======
 >>>>>>> 3fcc762 (Added Instructions)
     // How to Play image
@@ -72,12 +75,15 @@ int main()
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 7ec9272 (Added Gameover background)
 =======
 >>>>>>> 3fcc762 (Added Instructions)
 =======
 >>>>>>> 7ec9272 (Added Gameover background)
+=======
+>>>>>>> 3fcc762 (Added Instructions)
     // Game over image
     sf::Texture gameoverTexture;
     if (!gameoverTexture.loadFromFile("gameover.png")) {
@@ -278,6 +284,9 @@ int main()
                           (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3fcc762 (Added Instructions)
     // continue text
     sf::Text continueText;
     continueText.setFont(font1);
@@ -288,6 +297,7 @@ int main()
                           (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2 + 200);
 
 
+<<<<<<< HEAD
     // Restart button
     sf::Text restartButton;
 <<<<<<< HEAD
@@ -298,6 +308,8 @@ int main()
     restartButton.setCharacterSize(20);
 >>>>>>> 7ec9272 (Added Gameover background)
 =======
+=======
+>>>>>>> 3fcc762 (Added Instructions)
     // Restart button
     sf::Text restartButton;
     restartButton.setFont(font1);
@@ -331,6 +343,9 @@ int main()
         music.setLoop(true);
         music.play();
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 3fcc762 (Added Instructions)
     sf::Music music1;
         if (!music1.openFromFile("Soundtrack.wav"))
         {
@@ -347,9 +362,12 @@ int main()
             }
 //            music.setLoop(true);
 //            music.play();
+<<<<<<< HEAD
 =======
 
 >>>>>>> e18a912 (Added soundtrack)
+=======
+>>>>>>> 3fcc762 (Added Instructions)
 
     // Background image
 
@@ -500,9 +518,12 @@ int main()
 <<<<<<< HEAD
                     if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                         clickSound.play();
+<<<<<<< HEAD
 =======
                     if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
 >>>>>>> e18a912 (Added soundtrack)
+=======
+>>>>>>> 3fcc762 (Added Instructions)
                                             gameStarted = true;
                                         }
 
@@ -511,6 +532,7 @@ int main()
                         clickSound.play();
                                             continueClicked = true;
                                         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
                     if (startButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
@@ -531,6 +553,11 @@ int main()
                         clickSound.stop();
                         clickSound.play();
 >>>>>>> 3fcc762 (Added Instructions)
+=======
+                    if (restartButton.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
+                        clickSound.stop();
+                        clickSound.play();
+>>>>>>> 3fcc762 (Added Instructions)
                         // Reset game variables
                         score = 0;
                         lives = 3;
@@ -546,9 +573,13 @@ int main()
         }
 if (gameStarted) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     if (continueClicked){
 =======
 >>>>>>> e18a912 (Added soundtrack)
+=======
+    if (continueClicked){
+>>>>>>> 3fcc762 (Added Instructions)
     music.stop();
         if (!gameEnded) {
             if (ballReleased) {
@@ -639,9 +670,13 @@ if (gameStarted) {
                 gameEnded = true;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 music1.pause();
 =======
 >>>>>>> e18a912 (Added soundtrack)
+=======
+                music1.pause();
+>>>>>>> 3fcc762 (Added Instructions)
 //                sleep(1);
 
                 restartButton.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2,
@@ -699,10 +734,14 @@ else {
 
            window.clear();
 <<<<<<< HEAD
+<<<<<<< HEAD
 //           music1.play();
 =======
 
 >>>>>>> e18a912 (Added soundtrack)
+=======
+//           music1.play();
+>>>>>>> 3fcc762 (Added Instructions)
            // Draw start screen elements
            window.draw(startSprite);
 //           window.draw(startButton);

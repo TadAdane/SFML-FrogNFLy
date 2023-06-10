@@ -1,0 +1,48 @@
+Initial Commit
+
+Initial Commit
+
+# Conflicts:
+#	Semester 2/Final Project/main.cpp
+#
+# It looks like you may be committing a cherry-pick.
+# If this is not correct, please run
+#	git update-ref -d CHERRY_PICK_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Fri Jun 2 00:04:11 2023 +0200
+#
+# On branch main
+# You are currently cherry-picking commit 0fdf749.
+#
+# Changes to be committed:
+#	new file:   Semester 2/Final Project/Sprites/Background.jpg
+#	new file:   Semester 2/Final Project/Sprites/ball.png
+#	modified:   Semester 2/Final Project/main.cpp
+#
+# Conflicts:
+#	Semester 2/Final Project/main.cpp
+#
+# It looks like you may be committing a cherry-pick.
+# If this is not correct, please run
+#	git update-ref -d CHERRY_PICK_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Fri Jun 2 00:04:11 2023 +0200
+#
+# On branch main
+# You are currently cherry-picking commit 0fdf749.
+#
+# Changes to be committed:
+#	new file:   Semester 2/Final Project/Sprites/Background.jpg
+#	new file:   Semester 2/Final Project/Sprites/ball.png
+#	modified:   Semester 2/Final Project/main.cpp
+#

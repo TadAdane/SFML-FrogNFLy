@@ -1,0 +1,7 @@
+C:/Users/Tadiwos Adane/Desktop/Automatic Control and Robotics/Semester 2/Information Engineering/Semester 2/Mid term Test/build-SampleTest-Desktop-Debug/CMakeFiles/SampleTest.dir
+C:/Users/Tadiwos Adane/Desktop/Automatic Control and Robotics/Semester 2/Information Engineering/Semester 2/Mid term Test/build-SampleTest-Desktop-Debug/CMakeFiles/edit_cache.dir
+C:/Users/Tadiwos Adane/Desktop/Automatic Control and Robotics/Semester 2/Information Engineering/Semester 2/Mid term Test/build-SampleTest-Desktop-Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Tadiwos Adane/Desktop/Automatic Control and Robotics/Semester 2/Information Engineering/Semester 2/Mid term Test/build-SampleTest-Desktop-Debug/CMakeFiles/list_install_components.dir
+C:/Users/Tadiwos Adane/Desktop/Automatic Control and Robotics/Semester 2/Information Engineering/Semester 2/Mid term Test/build-SampleTest-Desktop-Debug/CMakeFiles/install.dir
+C:/Users/Tadiwos Adane/Desktop/Automatic Control and Robotics/Semester 2/Information Engineering/Semester 2/Mid term Test/build-SampleTest-Desktop-Debug/CMakeFiles/install/local.dir
+C:/Users/Tadiwos Adane/Desktop/Automatic Control and Robotics/Semester 2/Information Engineering/Semester 2/Mid term Test/build-SampleTest-Desktop-Debug/CMakeFiles/install/strip.dir

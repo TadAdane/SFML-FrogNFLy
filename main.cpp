@@ -146,6 +146,7 @@ public:
             std::cout << "Failed to load font!" << std::endl;
             return;
         }
+
         scoreText.setFont(font);
         scoreText.setCharacterSize(24);
         scoreText.setPosition(10, 10);
@@ -182,23 +183,30 @@ public:
         color.g = 0;
         color.b = 0;
 
+        sf::SoundBuffer blastSoundBuffer;
         if (!blastSoundBuffer.loadFromFile("splash.wav")) {
             std::cout << "Failed to load blast sound!" << std::endl;
             return;
         }
+        sf::Sound blastSound;
         blastSound.setBuffer(blastSoundBuffer);
 
+        sf::Music music;
         if (!music.openFromFile("Soundtrack.wav")) {
             std::cout << "Failed to load background music!" << std::endl;
             return;
         }
         music.setLoop(true);
+        music.play();
 
+        sf::Music music1;
         if (!music1.openFromFile("Soundtrack.wav")) {
             std::cout << "Failed to load game over music!" << std::endl;
             return;
         }
+        music1.setLoop(true);
 
+        sf::Music clickSound;
         if (!clickSound.openFromFile("click.wav")) {
             std::cout << "Failed to load click sound!" << std::endl;
             return;

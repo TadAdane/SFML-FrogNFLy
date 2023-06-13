@@ -36,6 +36,7 @@ int main()
     bool blasting = false;
     bool ballReleased = false;
     bool passedHole = false;
+    bool mouseTouch = false;
 
 
 
@@ -228,11 +229,46 @@ int main()
                     ballReleased = true;
                 }
             }
+
+
+      else if (event.type == sf::Event::MouseMoved) {
+                   sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+                 if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                     mouseTouch = true;
+                        startText.setCharacterSize(80);
+                     }
+                 else {
+                     mouseTouch = false;
+                         startText.setCharacterSize(70);
+                     }
+
+                 if (continueText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                      mouseTouch = true;
+                      continueText.setCharacterSize(80);
+                   }
+                  else {
+                        mouseTouch = false;
+                         continueText.setCharacterSize(70);
+                    }
+                 if (restartButton.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
+                    mouseTouch = true;
+                     restartButton.setCharacterSize(80);
+                   }
+                  else {
+                       mouseTouch = false;
+                         restartButton.setCharacterSize(70);
+                }
+        }
+
+
+
+
             else if (event.type == sf::Event::MouseButtonPressed) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
                     if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
                         clickSound.play();
+
                                             gameStarted = true;
                                         }
 
@@ -256,6 +292,7 @@ int main()
                 }
             }
         }
+
 if (gameStarted) {
     if (continueClicked){
     music.stop();
@@ -362,6 +399,8 @@ if (gameStarted) {
 
             window.display();
         }
+
+
 
         // restart game
         if (restartClicked) {

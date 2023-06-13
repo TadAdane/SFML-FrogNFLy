@@ -231,7 +231,6 @@ int main()
             }
 
         // highlight
-      if(mouseTouch){};
       else if (event.type == sf::Event::MouseMoved) {
                    sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
                  if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {

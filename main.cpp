@@ -5,8 +5,9 @@
 #include <unistd.h>
 #include <ctime>
 
-class BallGame {
-private:
+
+int main()
+{
     const int windowWidth = 800;
     const int windowHeight = 600;
     const int barHeight = 74;
@@ -17,329 +18,391 @@ private:
     const float speedIncrease = 1.2f;
     const int numBlastFrames = 7;
     const int blastFrameDuration = 5;
+    const int buttonWidth = 200;
+    const int buttonHeight = 50;
 
-    sf::RenderWindow window;
-    sf::Sprite backgroundSprite;
-    sf::Sprite howToPlaySprite;
-    sf::Sprite gameoverSprite;
-    sf::Sprite ground;
-    sf::Sprite holeBar;
-    sf::Sprite ballSprite;
-    sf::Sprite blastSprite;
-    sf::Text scoreText;
-    sf::Text livesText;
-    sf::Text gameOverText;
-    sf::Text startText;
-    sf::Text continueText;
-    sf::Text restartButton;
-    sf::Color color1;
-    sf::Color color;
-    sf::Font font1;
-    sf::Font font;
+    bool gameEnded = false;
+    bool restartClicked = false;
+    bool continueClicked = false;
+    bool gameStarted = false;
+
+
+
+    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Ball Game");
+    window.setFramerateLimit(60);
+
+    // Background image
+    sf::Texture backgroundTexture;
+    if (!backgroundTexture.loadFromFile("Background_.jpg")) {
+        return EXIT_FAILURE;
+    }
+    sf::Sprite backgroundSprite(backgroundTexture);
+
+    // start texture
+    sf::Texture startTexture;
+    if (!startTexture.loadFromFile("start.png")) {
+        return EXIT_FAILURE;
+    }
+    sf::Sprite startSprite(startTexture);
+
+
+    // How to Play image
+    sf::Texture howToPlayTexture;
+    if (!howToPlayTexture.loadFromFile("howToPlay.png")) {
+        return EXIT_FAILURE;
+    }
+    sf::Sprite howToPlaySprite(howToPlayTexture);
+    howToPlaySprite.setPosition(150, 75);
+
+
+    // Game over image
+    sf::Texture gameoverTexture;
+    if (!gameoverTexture.loadFromFile("gameover.png")) {
+        return EXIT_FAILURE;
+    }
+    sf::Sprite gameoverSprite(gameoverTexture);
+
+
+    // Ground
+    sf::Texture groundTexture;
+    if (!groundTexture.loadFromFile("swampWater.jpg")) {
+        return EXIT_FAILURE;
+    }
+    sf::Sprite ground(groundTexture);
+    ground.setPosition(0, windowHeight - barHeight + 54);
+
+    // Hole bar
+    sf::Texture holeTexture;
+    if (!holeTexture.loadFromFile("hole_frog.png")) {
+        return EXIT_FAILURE;
+    }
+
+    sf::Sprite holeBar(holeTexture);
+    float holeWidth = 80.0f;
+    holeBar.setPosition((windowWidth - holeWidth) / 2, windowHeight - barHeight);
+
+    // Ball sprite
+    sf::Texture ballTexture;
+    if (!ballTexture.loadFromFile("fly.png")) {
+        return EXIT_FAILURE;
+    }
+    sf::Sprite ballSprite(ballTexture);
+    ballSprite.setOrigin(ballRadius, ballRadius);
+    ballSprite.setPosition(rand() % (windowWidth - ballRadius * 2) + ballRadius + 150, 10);
+
+
+
+
+    // Blast sprite
+    sf::Texture blastTexture;
+    if (!blastTexture.loadFromFile("splash.png")) {
+        return EXIT_FAILURE;
+    }
+
+    sf::Sprite blastSprite(blastTexture);
+
+    int blastFrame = 0;
+    int blastFrameCounter = 0;
+    bool blasting = false;
+    blastSprite.setTextureRect(sf::IntRect(0, 0, blastTexture.getSize().x / numBlastFrames, blastTexture.getSize().y));
+    blastSprite.setOrigin(blastSprite.getTextureRect().width / 2, blastSprite.getTextureRect().height / 2);
+    blastSprite.setPosition(windowWidth / 2, windowHeight / 2);
+
+    bool ballReleased = false;
+    bool passedHole = false;
+    int score = 0;
+    int lives = 3;
+    float holeMinX = (windowWidth - holeWidth) / 2;
+    float holeMaxX = holeMinX + holeWidth;
+
     sf::Vector2f blastPosition;
+
+    // fonts
+    sf::Font font1;
+    if(!font1.loadFromFile("BITCBLKAD.ttf")){
+        return EXIT_FAILURE;
+    }
+
+    sf::Font font;
+    if (!font.loadFromFile("arial.ttf")) {
+        return EXIT_FAILURE;
+    }
+
+    // colors
+    sf::Color color1(255, 178, 102);
+    sf::Color color(0, 76, 156);
+
+    // Score text
+    sf::Text scoreText;
+    scoreText.setFont(font1);
+    scoreText.setCharacterSize(30);
+    scoreText.setFillColor(color1);
+    scoreText.setPosition(10, 10);
+
+    // Lives text
+    sf::Text livesText;
+    livesText.setFont(font1);
+    livesText.setCharacterSize(30);
+    livesText.setFillColor(color1);
+    livesText.setPosition(windowWidth - 100, 10);
+
+    // Game Over text
+    sf::Text gameOverText;
+    gameOverText.setFont(font1);
+    gameOverText.setCharacterSize(60);
+    gameOverText.setFillColor(color);
+    gameOverText.setPosition((windowWidth - gameOverText.getLocalBounds().width) / 2, windowHeight / 2);
+
+
+    // Start text
+    sf::Text startText;
+    startText.setFont(font1);
+    startText.setCharacterSize(70);
+    startText.setFillColor(color);
+    startText.setString("Start");
+    startText.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2,
+                          (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2);
+
+    // continue text
+    sf::Text continueText;
+    continueText.setFont(font1);
+    continueText.setCharacterSize(70);
+    continueText.setFillColor(sf::Color::Green);
+    continueText.setString("Continue");
+    continueText.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2 + 200,
+                          (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2 + 200);
+
+
+    // Restart button
+    sf::Text restartButton;
+    restartButton.setFont(font1);
+    restartButton.setCharacterSize(70);
+    restartButton.setFillColor(sf::Color::Green);
+    restartButton.setString("Restart");
+    restartButton.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2,
+                              (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2);
+
+
+    // Blast sound effect
     sf::SoundBuffer blastSoundBuffer;
+    if (!blastSoundBuffer.loadFromFile("splash.wav")) {
+        return EXIT_FAILURE;
+    }
     sf::Sound blastSound;
+    blastSound.setBuffer(blastSoundBuffer);
+
+
     sf::Music music;
-    sf::Music music1;
-    sf::Music clickSound;
-
-    bool ballReleased;
-    bool passedHole;
-    int score;
-    int lives;
-    float holeWidth;
-    float holeMinX;
-    float holeMaxX;
-    int blastFrame;
-    int blastFrameCounter;
-    bool blasting;
-    bool gameEnded;
-    bool restartClicked;
-    bool continueClicked;
-    bool gameStarted;
-
-public:
-    BallGame() :
-        window(sf::VideoMode(windowWidth, windowHeight), "Ball Game"),
-        ballReleased(false),
-        passedHole(false),
-        score(0),
-        lives(3),
-        holeWidth(80.0f),
-        holeMinX((windowWidth - holeWidth) / 2),
-        holeMaxX(holeMinX + holeWidth),
-        blastFrame(0),
-        blastFrameCounter(0),
-        blasting(false),
-        gameEnded(false),
-        restartClicked(false),
-        continueClicked(false),
-        gameStarted(false)
-    {
-        window.setFramerateLimit(60);
-
-        sf::Texture backgroundTexture;
-        if (!backgroundTexture.loadFromFile("Background_.jpg")) {
-            std::cout << "Failed to load background image!" << std::endl;
-            return;
-        }
-        sf::Sprite backgroundSprite(backgroundTexture);
-        backgroundSprite.setTexture(backgroundTexture);
-
-        sf::Texture howToPlayTexture;
-        if (!howToPlayTexture.loadFromFile("howToPlay.png")) {
-            std::cout << "Failed to load how to play image!" << std::endl;
-            return;
-        }
-        sf::Sprite howToPlaySprite(howToPlayTexture);
-        howToPlaySprite.setTexture(howToPlayTexture);
-        howToPlaySprite.setPosition(150, 75);
-
-        sf::Texture gameoverTexture;
-        if (!gameoverTexture.loadFromFile("gameover.png")) {
-            std::cout << "Failed to load game over image!" << std::endl;
-            return;
-        }
-        sf::Sprite gameoverSprite(gameoverTexture);
-        gameoverSprite.setTexture(gameoverTexture);
-
-        sf::Texture groundTexture;
-        if (!groundTexture.loadFromFile("swampWater.jpg")) {
-            std::cout << "Failed to load ground texture!" << std::endl;
-            return;
-        }
-        sf::Sprite ground(groundTexture);
-        ground.setTexture(groundTexture);
-        ground.setPosition(0, windowHeight - barHeight + 54);
-
-
-        sf::Texture holeTexture;
-        if (!holeTexture.loadFromFile("hole_frog.png")) {
-            std::cout << "Failed to load hole texture!" << std::endl;
-            return;
-        }
-         sf::Sprite holeBar(holeTexture);
-        holeBar.setTexture(holeTexture);
-        holeBar.setPosition(holeMinX, windowHeight - barHeight + 22);
-
-        sf::Texture ballTexture;
-        if (!ballTexture.loadFromFile("fly.png")) {
-            std::cout << "Failed to load ball texture!" << std::endl;
-            return;
-        }
-        sf::Sprite ballSprite(ballTexture);
-        ballSprite.setTexture(ballTexture);
-        ballSprite.setOrigin(ballRadius, ballRadius);
-        ballSprite.setPosition(windowWidth / 2, windowHeight / 2);
-
-        sf::Texture blastTexture;
-        if (!blastTexture.loadFromFile("splash.png")) {
-            std::cout << "Failed to load blast texture!" << std::endl;
-            return;
-        }
-        sf::Sprite blastSprite(blastTexture);
-        blastSprite.setTexture(blastTexture);
-        blastSprite.setOrigin(blastTexture.getSize().x / 2, blastTexture.getSize().y / 2);
-
-        sf::Font font;
-        if (!font.loadFromFile("arial.ttf")) {
-            std::cout << "Failed to load font!" << std::endl;
-            return;
-        }
-
-        scoreText.setFont(font);
-        scoreText.setCharacterSize(24);
-        scoreText.setPosition(10, 10);
-
-        livesText.setFont(font);
-        livesText.setCharacterSize(24);
-        livesText.setPosition(windowWidth - 110, 10);
-
-        gameOverText.setFont(font);
-        gameOverText.setCharacterSize(60);
-        gameOverText.setPosition(windowWidth / 2 - 200, windowHeight / 2 - 50);
-        gameOverText.setString("Game Over!");
-
-        startText.setFont(font);
-        startText.setCharacterSize(60);
-        startText.setPosition(windowWidth / 2 - 320, windowHeight / 2 - 200);
-        startText.setString("Click to Start!");
-
-        continueText.setFont(font);
-        continueText.setCharacterSize(60);
-        continueText.setPosition(windowWidth / 2 - 200, windowHeight / 2 - 50);
-        continueText.setString("Click to Continue!");
-
-        restartButton.setFont(font);
-        restartButton.setCharacterSize(30);
-        restartButton.setPosition(windowWidth / 2 - 80, windowHeight / 2 + 50);
-        restartButton.setString("Restart");
-
-        color1.r = 255;
-        color1.g = 153;
-        color1.b = 51;
-
-        color.r = 255;
-        color.g = 0;
-        color.b = 0;
-
-        sf::SoundBuffer blastSoundBuffer;
-        if (!blastSoundBuffer.loadFromFile("splash.wav")) {
-            std::cout << "Failed to load blast sound!" << std::endl;
-            return;
-        }
-        sf::Sound blastSound;
-        blastSound.setBuffer(blastSoundBuffer);
-
-        sf::Music music;
-        if (!music.openFromFile("Soundtrack.wav")) {
-            std::cout << "Failed to load background music!" << std::endl;
-            return;
+        if (!music.openFromFile("Soundtrack.wav"))
+        {
+            return EXIT_FAILURE;
         }
         music.setLoop(true);
         music.play();
-
-        sf::Music music1;
-        if (!music1.openFromFile("Soundtrack.wav")) {
-            std::cout << "Failed to load game over music!" << std::endl;
-            return;
+    sf::Music music1;
+        if (!music1.openFromFile("Soundtrack.wav"))
+        {
+            return EXIT_FAILURE;
         }
         music1.setLoop(true);
 
-        sf::Music clickSound;
-        if (!clickSound.openFromFile("click.wav")) {
-            std::cout << "Failed to load click sound!" << std::endl;
-            return;
-        }
-    }
 
-    void runGame() {
-        while (window.isOpen()) {
-            sf::Event event;
-            while (window.pollEvent(event)) {
-                if (event.type == sf::Event::Closed)
-                    window.close();
-                else if (event.type == sf::Event::KeyPressed) {
-                    if (event.key.code == sf::Keyboard::Space)
-                        ballReleased = true;
+        // Click sound
+        sf::Music clickSound;
+            if (!clickSound.openFromFile("Click.wav"))
+            {
+                return EXIT_FAILURE;
+            }
+
+
+// run
+
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+            else if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Space) {
+                    ballReleased = true;
                 }
-                else if (event.type == sf::Event::MouseButtonPressed) {
-                    if (event.mouseButton.button == sf::Mouse::Left) {
-                        if (gameEnded) {
-                            restartClicked = true;
-                        }
-                        else if (!gameStarted) {
-                            gameStarted = true;
-                            clickSound.play();
-                        }
-                        else if (passedHole) {
-                            continueClicked = true;
-                        }
-                        else {
-                            ballReleased = true;
-                        }
+            }
+            else if (event.type == sf::Event::MouseButtonPressed) {
+                if (event.mouseButton.button == sf::Mouse::Left) {
+                    sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+                    if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                        clickSound.play();
+                                            gameStarted = true;
+                                        }
+
+                    if (continueText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                        clickSound.stop();
+                        clickSound.play();
+                                            continueClicked = true;
+                                        }
+                    if (restartButton.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
+                        clickSound.stop();
+                        clickSound.play();
+                        // Reset game variables
+                        score = 0;
+                        lives = 3;
+                        holeSpeed = 2.0f;
+                        ballReleased = false;
+                        passedHole = false;
+                        gameEnded = false;
+                        restartClicked = true;
+                    }
+                }
+            }
+        }
+if (gameStarted) {
+    if (continueClicked){
+    music.stop();
+        if (!gameEnded) {
+            if (ballReleased) {
+                if (ballSprite.getPosition().y + 25 >= windowHeight) {
+                    if (!passedHole) {
+
+
+                        blastPosition = ballSprite.getPosition();
+
+                        blasting = true;
+                        blastSound.play();
+
+                        blastFrame = 0;
+                        blastFrameCounter = 0;
+                        lives--;
+
+                    }
+                    ballReleased = false;
+                    passedHole = false;
+                    ballSprite.setPosition(rand() % (windowWidth - ballRadius * 2) + ballRadius, 10);
+                }
+                else {
+                    ballSprite.move(0, 5);
+                    if (!passedHole && ballSprite.getPosition().x + ballRadius >= holeBar.getPosition().x &&
+                                       ballSprite.getPosition().x - ballRadius <= holeBar.getPosition().x + holeWidth &&
+                                       ballSprite.getPosition().y + ballRadius >= holeBar.getPosition().y &&
+                                       ballSprite.getPosition().y - ballRadius <= holeBar.getPosition().y + barHeight)
+                                   {
+                        passedHole = true;
+                        holeSpeed *= speedIncrease; //Increase speed as score increases.
+                        score++;
                     }
                 }
             }
 
+            // Move the hole bar automatically
+            if (!ballReleased) {
+                holeBar.move(holeSpeed, 0);
+
+                // Check for collision with window edges and change direction
+                if (holeBar.getPosition().x <= 0) {
+                    holeBar.setPosition(0, windowHeight - barHeight);
+                    holeSpeed = -holeSpeed;
+                }
+                else if (holeBar.getPosition().x + holeWidth >= windowWidth) {
+                    holeBar.setPosition(windowWidth - holeWidth, windowHeight - barHeight);
+                    holeSpeed = -holeSpeed;
+                }
+            }
+
             window.clear();
+
+            // Draw background
             window.draw(backgroundSprite);
 
-            if (!gameStarted) {
-                window.draw(startText);
-                window.draw(howToPlaySprite);
+            // Draw ground
+            window.draw(ground);
+
+            // Draw hole bar
+            window.draw(holeBar);
+
+            // Draw ball sprite
+            window.draw(ballSprite);
+
+           // draw blast anim
+            if (blasting) {
+                blastFrameCounter++;
+                if (blastFrameCounter >= blastFrameDuration) {
+                    blastFrame++;
+                    blastFrameCounter = 0;
+                    if (blastFrame >= numBlastFrames) {
+                        blasting = false;
+                        blastFrame = 0;
+                    }
+                }
+                blastSprite.setTextureRect(sf::IntRect(blastFrame * blastSprite.getTextureRect().width, 0, blastSprite.getTextureRect().width, blastSprite.getTextureRect().height));
+                blastSprite.setPosition(blastPosition);
+                window.draw(blastSprite);
             }
-            else if (gameEnded) {
+
+
+            // write text
+            scoreText.setString("Score: " + std::to_string(score));
+            window.draw(scoreText);
+
+            livesText.setString("Lives: " + std::to_string(lives));
+            window.draw(livesText);
+
+           // game over
+            if (lives <= 0) {
+                gameEnded = true;
+                music1.pause();
+
+                restartButton.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2,
+                                          (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2 + 15);
+                gameOverText.setPosition((windowWidth - buttonWidth) / 2 + (buttonWidth - startText.getLocalBounds().width) / 2 - 70,
+                                         (windowHeight - buttonHeight) / 2 + (buttonHeight - startText.getLocalBounds().height) / 2 - 75);
+                gameOverText.setString("Your Score is: " + std::to_string(score));
                 window.draw(gameoverSprite);
                 window.draw(gameOverText);
                 window.draw(restartButton);
             }
-            else {
-                update();
-                draw();
-            }
 
             window.display();
         }
+
+        // restart game
+        if (restartClicked) {
+            music1.play();
+            // Reset hole bar position
+            holeBar.setPosition((windowWidth - holeWidth) / 2, windowHeight - barHeight);
+
+            // Reset ball position
+            ballSprite.setPosition(rand() % (windowWidth - ballRadius * 2) + ballRadius + 150, 10);
+
+            // Reset game variables
+            score = 0;
+            lives = 3;
+            holeSpeed = 2.0f;
+            ballReleased = false;
+            passedHole = false;
+            gameEnded = false;
+            restartClicked = false;
+        }
+     }
+    else {
+        music1.play();
+        window.clear();
+        window.draw(backgroundSprite);
+        window.draw(howToPlaySprite);
+        window.draw(continueText);
+        window.display();
     }
-
-    void update() {
-        if (!ballReleased)
-            return;
-
-        if (blasting) {
-            blastFrameCounter++;
-            if (blastFrameCounter >= blastFrameDuration) {
-                blastFrameCounter = 0;
-                blastFrame++;
-                if (blastFrame >= numBlastFrames) {
-                    blasting = false;
-                    blastFrame = 0;
-                }
-            }
-        }
-
-        if (ballSprite.getPosition().y + ballRadius * 2 > windowHeight - barHeight + 54) {
-            if (ballSprite.getPosition().x >= holeMinX && ballSprite.getPosition().x <= holeMaxX) {
-                passedHole = true;
-                holeSpeed += speedIncrease;
-                if (holeSpeed > maxHoleSpeed)
-                    holeSpeed = maxHoleSpeed;
-                score++;
-            }
-            else {
-                lives--;
-                if (lives <= 0) {
-                    gameEnded = true;
-                    music.stop();
-                    music1.play();
-                }
-                else {
-                    ballSprite.setPosition(windowWidth / 2, windowHeight / 2);
-                    ballReleased = false;
-                    passedHole = false;
-                    holeSpeed = 2.0f;
-                }
-            }
-        }
-
-        float ballSpeed = groundSpeed + holeSpeed;
-        ballSprite.move(0, ballSpeed);
-
-        if (ballSprite.getPosition().y + ballRadius * 2 > windowHeight - barHeight + 54)
-            ballSprite.setPosition(ballSprite.getPosition().x, windowHeight - barHeight + 54 - ballRadius * 2);
-
-        if (blasting) {
-            blastSprite.setPosition(blastPosition.x, blastPosition.y);
-        }
-        else {
-            float holeMovement = groundSpeed + holeSpeed;
-            holeBar.move(holeMovement, 0);
-            if (holeBar.getPosition().x < 0 || holeBar.getPosition().x + holeWidth > windowWidth) {
-                holeSpeed = -holeSpeed;
-                holeBar.move(holeSpeed, 0);
-            }
-        }
     }
+else {
 
-    void draw() {
-        window.draw(ground);
-        window.draw(holeBar);
-        window.draw(ballSprite);
+           window.clear();
+           // Draw start screen elements
+           window.draw(startSprite);
+          // window.draw(startButton);
+           window.draw(startText);
 
-        if (blasting)
-            window.draw(blastSprite);
+           window.display();
+       }
+}
 
-        scoreText.setString("Score: " + std::to_string(score));
-        window.draw(scoreText);
-
-        livesText.setString("Lives: " + std::to_string(lives));
-        window.draw(livesText);
-    }
-};
-
-int main() {
-    BallGame game;
-    game.runGame();
     return 0;
 }

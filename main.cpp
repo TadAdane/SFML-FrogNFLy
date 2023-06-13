@@ -14,6 +14,7 @@ int main()
     const int ballRadius = 10;
     float groundSpeed = 2.0f;
     float holeSpeed = 2.0f;
+    float holeWidth = 80.0f;
     const float maxHoleSpeed = 8.0f;
     const float speedIncrease = 1.2f;
     const int numBlastFrames = 7;
@@ -21,10 +22,20 @@ int main()
     const int buttonWidth = 200;
     const int buttonHeight = 50;
 
+    int blastFrame = 0;
+    int blastFrameCounter = 0;
+    int score = 0;
+    int lives = 3;
+    float holeMinX = (windowWidth - holeWidth) / 2;
+    float holeMaxX = holeMinX + holeWidth;
+
     bool gameEnded = false;
     bool restartClicked = false;
     bool continueClicked = false;
     bool gameStarted = false;
+    bool blasting = false;
+    bool ballReleased = false;
+    bool passedHole = false;
 
 
 
@@ -78,7 +89,6 @@ int main()
     }
 
     sf::Sprite holeBar(holeTexture);
-    float holeWidth = 80.0f;
     holeBar.setPosition((windowWidth - holeWidth) / 2, windowHeight - barHeight);
 
     // Ball sprite
@@ -94,28 +104,18 @@ int main()
 
 
     // Blast sprite
+    sf::Vector2f blastPosition;
     sf::Texture blastTexture;
     if (!blastTexture.loadFromFile("splash.png")) {
         return EXIT_FAILURE;
     }
-
     sf::Sprite blastSprite(blastTexture);
-
-    int blastFrame = 0;
-    int blastFrameCounter = 0;
-    bool blasting = false;
     blastSprite.setTextureRect(sf::IntRect(0, 0, blastTexture.getSize().x / numBlastFrames, blastTexture.getSize().y));
     blastSprite.setOrigin(blastSprite.getTextureRect().width / 2, blastSprite.getTextureRect().height / 2);
     blastSprite.setPosition(windowWidth / 2, windowHeight / 2);
 
-    bool ballReleased = false;
-    bool passedHole = false;
-    int score = 0;
-    int lives = 3;
-    float holeMinX = (windowWidth - holeWidth) / 2;
-    float holeMaxX = holeMinX + holeWidth;
 
-    sf::Vector2f blastPosition;
+
 
     // fonts
     sf::Font font1;
@@ -263,7 +263,6 @@ if (gameStarted) {
             if (ballReleased) {
                 if (ballSprite.getPosition().y + 25 >= windowHeight) {
                     if (!passedHole) {
-
 
                         blastPosition = ballSprite.getPosition();
 

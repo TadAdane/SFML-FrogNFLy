@@ -218,80 +218,98 @@ int main()
 
 // run
 
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-            else if (event.type == sf::Event::KeyPressed) {
-                if (event.key.code == sf::Keyboard::Space) {
-                    ballReleased = true;
-                }
-            }
+            //    srand(NULL);
 
-        // highlight
-      else if (event.type == sf::Event::MouseMoved) {
-                   sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-                 if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-                     mouseTouch = true;
-                        startText.setCharacterSize(80);
-                     }
-                 else {
-                     mouseTouch = false;
-                         startText.setCharacterSize(70);
-                     }
+                while (window.isOpen()) {
+                    sf::Event event;
+                    while (window.pollEvent(event)) {
+                        if (event.type == sf::Event::Closed) {
+                            window.close();
+                        }
+                        else if (event.type == sf::Event::KeyPressed) {
+                            if (event.key.code == sf::Keyboard::Space) {
+                                ballReleased = true;
+                            }
+                        }
+                        else if (event.type == sf::Event::MouseButtonPressed) {
+                            if (event.mouseButton.button == sf::Mouse::Left) {
+                                sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+                                if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+            //                        startText.setFillColor(sf::Color::Red);
+                                    clickSound.play();
+                                                        gameStarted = true;
+                                                    }
 
-                 if (continueText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-                      mouseTouch = true;
-                      continueText.setCharacterSize(80);
-                   }
-                  else {
-                        mouseTouch = false;
-                         continueText.setCharacterSize(70);
+                                if (continueText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+            //                        continueText.setFillColor(sf::Color::Red);
+                                    clickSound.stop();
+                                    clickSound.play();
+                                                        continueClicked = true;
+                                                    }
+                                if (restartButton.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
+                                    clickSound.stop();
+                                    clickSound.play();
+            //                        restartButton.setFillColor(sf::Color::Red);
+                                    // Reset game variables
+                                    score = 0;
+                                    lives = 3;
+                                    holeSpeed = 2.0f;
+                                    ballReleased = false;
+                                    passedHole = false;
+                                    gameEnded = false;
+                                    restartClicked = true;
+                                }
+                            }
+                        }
+
+                        else if(event.type == sf::Event::MouseMoved){
+                            sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+                            if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                                    startText.setFillColor(sf::Color::Red);
+                                    startText.setCharacterSize(75);
+                                                }
+                            else {
+
+                                (startText.setFillColor(color));
+                                startText.setCharacterSize(70);
+                            }
+                            if (continueText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+                                    continueText.setFillColor(sf::Color::Red);
+                                    continueText.setCharacterSize(75);
+                                                }
+                            else {
+
+                                continueText.setFillColor(sf::Color::Green);
+                                continueText.setCharacterSize(70);
+                            }
+                        }
+
+            //            else if(event.type == sf::Event::MouseMoved){
+            //                sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+            //                if (continueText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+            //                        continueText.setFillColor(sf::Color::Red);
+            //                        continueText.setCharacterSize(75);
+            //                                    }
+            //                else {
+
+            //                    (continueText.setFillColor(color));
+            //                    continueText.setCharacterSize(70);
+            //                }
+            //            }
+
+            //            else if(event.type == sf::Event::MouseMoved){
+            //                sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+            //                if (restartButton.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
+            //                        restartButton.setFillColor(sf::Color::Red);
+            //                        restartButton.setCharacterSize(75);
+            //                                    }
+            //                else {
+
+            //                    (restartButton.setFillColor(color));
+            //                    restartButton.setCharacterSize(70);
+            //                }
+            //            }
                     }
-                 if (restartButton.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
-                    mouseTouch = true;
-                     restartButton.setCharacterSize(80);
-                   }
-                  else {
-                       mouseTouch = false;
-                         restartButton.setCharacterSize(70);
-                }
-        }
-
-
-
-
-            else if (event.type == sf::Event::MouseButtonPressed) {
-                if (event.mouseButton.button == sf::Mouse::Left) {
-                    sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-                    if (startText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-                        clickSound.play();
-
-                                            gameStarted = true;
-                                        }
-
-                    if (continueText.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-                        clickSound.stop();
-                        clickSound.play();
-                                            continueClicked = true;
-                                        }
-                    if (restartButton.getGlobalBounds().contains(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y))) {
-                        clickSound.stop();
-                        clickSound.play();
-                        // Reset game variables
-                        score = 0;
-                        lives = 3;
-                        holeSpeed = 2.0f;
-                        ballReleased = false;
-                        passedHole = false;
-                        gameEnded = false;
-                        restartClicked = true;
-                    }
-                }
-            }
-        }
 
 if (gameStarted) {
     if (continueClicked){

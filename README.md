@@ -1,13 +1,13 @@
-# FlyNFrof Game 🎮
+# 🎮 FlyNFrog Game 
 
 This is a simple Fly and Frog game implemented in SFML. The objective of the game is to guide the fly and feed through a moving frog without hitting the water. The game keeps track of the score and the number of lives remaining.
 
-## Prerequisites 🖥
+## 🖥 Prerequisites 
 
 - SFML library
 - C++ compiler
 
-## How to Play 💻
+## 💻 How to Play 
 
 1. Run the executable file.
 2. Use the **spacebar** to release the ball.
@@ -17,11 +17,11 @@ This is a simple Fly and Frog game implemented in SFML. The objective of the gam
 6. Be careful! If the fly hits the water, you lose one life.
 7. The game ends when you run out of lives.
 
-## Controls 🕹
+## 🕹 Controls 
 
 - **Spacebar**: Release the ball
 
-## Features 📱
+## 📱 Features 
 
 - Randomly generated fly positions at the start of the game
 - Automatic movement of the frog
